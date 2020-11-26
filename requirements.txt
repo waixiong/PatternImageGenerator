@@ -1,0 +1,4 @@
+cryptography==2.8
+numpy==1.19.4
+opencv-python==4.4.0.46
+reedsolo==1.5.4

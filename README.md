@@ -11,6 +11,9 @@
 
 Image format allow, `jpeg`, `png`
 
+### Warning
+Currently only 52 characters can be encoded, error will happen if characters more than 52
+
 
 ## Library Used
 ### Delaunator-Python

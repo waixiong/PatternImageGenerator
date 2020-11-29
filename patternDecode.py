@@ -36,19 +36,6 @@ def centroid(vertexes):
     _y = sum(_y_list) / _len
     return[_x, _y]
 
-def checkEOF(bytesData):
-    counter = 0
-    index = 0
-    for byte in bytesData:
-        if byte == 0x1a:
-            counter += 1
-        else:
-            counter = 0
-        index += 1
-        if counter >= 3:
-            break
-    return bytesData[:index-counter]
-
 def extractFromTriangleColor(delaunator, points, numberData, multipleCounter, maxSize, img):
     cloneImg = np.zeros(img.shape, np.uint8)
     triangles = delaunator.triangles
@@ -193,9 +180,8 @@ def decode(inputfile):
 
     numberData, multipleCounter = extractFromTriangleColor(delaunator, points, numberData, multipleCounter, img.shape[0], img)
     byteData = numberData.to_bytes((numberData.bit_length() + 7) // 8, byteorder='little')
-    byteData = checkEOF(byteData)
 
     print(byteData)
     msg, check, errorlen = patternECC.decodeWithReedSolo(byteData)
     print('Error Len: '+str(errorlen))
-    return msg
+    return patternECC.checkEOF(msg)
